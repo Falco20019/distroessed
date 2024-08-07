@@ -11,15 +11,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "distroessed", "Distroessed\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotnetRelease", "DotnetRelease\DotnetRelease.csproj", "{BA60A845-611B-4D43-B7B0-DE8A062F09FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarkdownHelpers", "MarkdownHelpers\MarkdownHelpers.csproj", "{54629CF0-692A-4237-A1E9-C19022C40C48}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarkdownHelpers", "MarkdownHelpers\MarkdownHelpers.csproj", "{54629CF0-692A-4237-A1E9-C19022C40C48}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinuxPackagesMd", "LinuxPackagesMd\LinuxPackagesMd.csproj", "{34E637B6-58DA-48CE-B991-6A04C6672569}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LinuxPackagesMd", "LinuxPackagesMd\LinuxPackagesMd.csproj", "{34E637B6-58DA-48CE-B991-6A04C6672569}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenerateJsonSchemas", "GenerateJsonSchemas\GenerateJsonSchemas.csproj", "{5AB744AC-83F8-485F-AE8C-701A7F1C72E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenerateJsonSchemas", "GenerateJsonSchemas\GenerateJsonSchemas.csproj", "{5AB744AC-83F8-485F-AE8C-701A7F1C72E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{13C34522-E02C-4678-B1DF-E8E29EEFD20F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test", "Test\Test.csproj", "{13C34522-E02C-4678-B1DF-E8E29EEFD20F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateReleasesIndex", "UpdateReleasesIndex\UpdateReleasesIndex.csproj", "{1CC51404-5AB9-49BA-8BE7-6263259F02E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UpdateReleasesIndex", "UpdateReleasesIndex\UpdateReleasesIndex.csproj", "{1CC51404-5AB9-49BA-8BE7-6263259F02E9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreSupportMd", "CoreSupportMd\CoreSupportMd.csproj", "{32648418-7F14-4D26-AF49-A62D03F245D5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReleaseReport", "ReleaseReport\ReleaseReport.csproj", "{0A34777F-E4DC-4E37-A2CF-4B2110B60B47}"
 EndProject
@@ -65,6 +67,10 @@ Global
 		{1CC51404-5AB9-49BA-8BE7-6263259F02E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1CC51404-5AB9-49BA-8BE7-6263259F02E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1CC51404-5AB9-49BA-8BE7-6263259F02E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32648418-7F14-4D26-AF49-A62D03F245D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32648418-7F14-4D26-AF49-A62D03F245D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32648418-7F14-4D26-AF49-A62D03F245D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32648418-7F14-4D26-AF49-A62D03F245D5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0A34777F-E4DC-4E37-A2CF-4B2110B60B47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0A34777F-E4DC-4E37-A2CF-4B2110B60B47}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A34777F-E4DC-4E37-A2CF-4B2110B60B47}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -72,5 +78,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {229D2EE1-2FE7-4BFE-BEAA-B95365A58892}
 	EndGlobalSection
 EndGlobal
