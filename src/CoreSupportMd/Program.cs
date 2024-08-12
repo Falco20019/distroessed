@@ -74,7 +74,7 @@ foreach (var line in File.ReadLines(template))
             new("Windows", "windows", "7"),
             new("Windows", "windows", "8.1"),
             new("Windows", "windows-nano-server"),
-            new("Windows", "windows-server"),
+            new("Windows", "windows-server-core"),
             new("Linux", "alpine"),
             new("Linux", "ubuntu")
         ];
@@ -150,13 +150,14 @@ static async Task WriteSupportedVersionsSubSectionAsync(StreamWriter writer, Htt
         
         var allSupportedVersions = GetSupportVersions(targetedReports, target);
         var allEols = targetDistro == null ? [] : await GetVersionsWithEol(targetDistro.Id, allSupportedVersions, client);
+        var versionPrefix = target.VersionPrefix;
         foreach (var majorVersion in targetDistros.Keys)
         {
-            var result = GetSupportedMajorForTarget(targetDistro, majorVersion, allSupportedVersions);
+            var result = GetSupportedMajorForTarget(targetDistro, majorVersion, allSupportedVersions, versionPrefix);
             table.WriteColumn(result);
         }
-        
-        var supportedVersionsWithEol = GetVersionWithEol(targetDistro, allSupportedVersions, allEols, target.VersionPrefix);
+
+        var supportedVersionsWithEol = GetVersionWithEol(targetDistro, allSupportedVersions, allEols, versionPrefix);
         var lifecycleLink = GetLifecycleAndNextEolVersion(targetDistro, supportedVersionsWithEol);
         table.WriteColumn(lifecycleLink);
         table.EndRow();
@@ -304,7 +305,8 @@ static IEnumerable<string> GetDotNetColumnNames(IEnumerable<int> versions) => ve
 static IEnumerable<int> GetDotNetColumnWidths(int count) => Enumerable.Repeat(32, count);
 static string Join(IEnumerable<string>? strings) => strings is null ? "" : string.Join(", ", strings);
 
-static string GetSupportedMajorForTarget(SupportDistribution? distro, int majorVersion, Dictionary<int, IEnumerable<string>> allSupportedVersions)
+static string GetSupportedMajorForTarget(SupportDistribution? distro, int majorVersion,
+    Dictionary<int, IEnumerable<string>> allSupportedVersions, string? versionPrefix)
 {
     if (distro == null || !allSupportedVersions.TryGetValue(majorVersion, out var distroVersionsEnum))
     {
@@ -322,6 +324,8 @@ static string GetSupportedMajorForTarget(SupportDistribution? distro, int majorV
     {
         distroVersions = SupportedOS.SimplifyWindowsVersions(distroVersions);
     }
+
+    distroVersions = distroVersions.Select(version => StripVersionPrefix(version, versionPrefix)).ToList();
 
     return $"(/)<br/>" +
            $"Versions: {Join(distroVersions)}<br/>" +
@@ -372,16 +376,7 @@ static IEnumerable<VersionWithEol> GetVersionWithEol(SupportDistribution? distro
             version = SupportedOS.PrettyifyWindowsVersion(version);
         }
 
-        if (versionPrefix != null)
-        {
-            var offset = versionPrefix.Length + 1;
-            if (version.Length > offset)
-            {
-                version = version.Substring(offset);
-            }
-        }
-
-        return version;
+        return StripVersionPrefix(version, versionPrefix);
     }
 
     return allSupportedVersions
@@ -395,6 +390,19 @@ static IEnumerable<VersionWithEol> GetVersionWithEol(SupportDistribution? distro
             PrettifyVersion(eol.Key),
             eol.Value?.Link,
             GetEolDateForCycle(eol.Value)));
+}
+
+static string StripVersionPrefix(string version, string? versionPrefix)
+{
+    if (versionPrefix == null) return version;
+
+    var offset = versionPrefix.Length + 1;
+    if (version.Length > offset)
+    {
+        version = version.Substring(offset);
+    }
+
+    return version;
 }
 
 public record VersionWithEol(string Version, string? Link, DateOnly EolDate);
