@@ -5,7 +5,7 @@ using EndOfLifeDate;
 using MarkdownHelpers;
 
 int[] formerVersions = [6, 7, 8];
-int[] currentVersions = [6, 8];
+int[] currentVersions = [6, 7, 8];
 
 var template = "core-support-template.md";
 var file = "core-support.md";
