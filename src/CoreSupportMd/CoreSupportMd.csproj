@@ -5,7 +5,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Distroessed\distroessed.csproj" />
+    <ProjectReference Include="..\ReleaseReport\ReleaseReport.csproj" />
     <ProjectReference Include="..\MarkdownHelpers\MarkdownHelpers.csproj" />
   </ItemGroup>
 
