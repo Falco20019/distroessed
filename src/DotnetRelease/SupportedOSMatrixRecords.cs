@@ -55,12 +55,24 @@ public record SupportDistribution(
     [Description("Once but not longer supported versions for distribution.")]
     public IList<string>? UnsupportedVersions { get; set; } = null;
 
+    [Description("Versions that are handled differently compared to the lifecycle.")]
+    public IList<ExceptionalVersion>? ExceptionalVersions { get; set; } = null;
+
     [Description("Link to lifecycle page for distribution.")]
     public string? Lifecycle { get; set; } = null;
 
     [Description("Support notes for distribution. For example, use notes if a given distribution architecture or version is only supported in certain circumstances.")]
     public IList<string>? Notes { get; set; } = null;
 }
+
+[JsonUnmappedMemberHandling(JsonUnmappedMemberHandling.Disallow)]
+[Description("A version that has exceptional handling compared to the regular lifecycle.")]
+public record ExceptionalVersion(
+    [property: Description("The version affected.")]
+    string Version,
+    
+    [property: Description("Note describing the reason for special handling.")]
+    string Note);
 
 [JsonUnmappedMemberHandling(JsonUnmappedMemberHandling.Disallow)]
 [Description("Minimum supported libc versions, for both glibc and musl, with the allowance for different versions per architecture.")]

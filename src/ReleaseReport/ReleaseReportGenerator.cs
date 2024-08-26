@@ -28,6 +28,7 @@ public class ReleaseReportGenerator
                 List<string> supportedUnActiveReleases = [];
                 List<string> unsupportedUnActiveReleases = [];
                 List<string> missingReleases = [];
+                List<ReportException> exceptions = [];
                 
                 try
                 {
@@ -106,7 +107,15 @@ public class ReleaseReportGenerator
                     }
                 }
 
-                ReportDistribution reportDistribution = new(distro.Name, activeReleases, unsupportedActiveRelease, soonEolReleases, supportedUnActiveReleases, unsupportedUnActiveReleases, missingReleases);
+                if (distro.ExceptionalVersions != null)
+                {
+                    foreach (var exception in distro.ExceptionalVersions)
+                    {
+                        exceptions.Add(new ReportException(exception.Version, exception.Note));
+                    }
+                }
+
+                ReportDistribution reportDistribution = new(distro.Name, activeReleases, unsupportedActiveRelease, soonEolReleases, supportedUnActiveReleases, unsupportedUnActiveReleases, missingReleases, exceptions);
                 reportFamily.Distributions.Add(reportDistribution);
             }
         }
