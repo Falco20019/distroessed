@@ -4,6 +4,4 @@ public record ReportOverview(DateTime Timestamp, string Version, IList<ReportFam
 
 public record ReportFamily(string Name, IList<ReportDistribution> Distributions);
 
-public record ReportDistribution(string Name, IList<string> ActiveReleases, IList<string> ActiveReleasesUnsupported, IList<string> ActiveReleasesEOLSoon, IList<string> NotActiveReleasesSupported, IList<string> NotActiveReleasesUnsupported, IList<string> ReleasesMissing, IList<ReportException> Exceptions);
-
-public record ReportException(string Version, string Note);
+public record ReportDistribution(string Name, IList<string> ActiveReleases, IList<string> ActiveReleasesUnsupported, IList<string> ActiveReleasesEOLSoon, IList<string> NotActiveReleasesSupported, IList<string> NotActiveReleasesUnsupported, IList<string> ReleasesMissing, IList<ExceptionalVersion> Exceptions);
