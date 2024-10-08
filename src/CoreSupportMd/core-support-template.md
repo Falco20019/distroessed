@@ -1,6 +1,6 @@
 ## Supported versions
 
-Specific versions of the Core only natively support specific versions of .NET. Backwards compatability is only tested if marked explicitly!
+Specific versions of the Core only natively support specific versions of .NET. Backwards compatibility is only tested if marked explicitly!
 
 ### First level targets
 
@@ -28,6 +28,6 @@ PLACEHOLDER-NON-TARGETS
 
 ## Out of support versions
 
-Support for the following versions was ended by the distribution owners and are [no longer supported by .NET](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md) and therefore also dropped by the Core.
+Support for the following versions was ended by the distribution owners and are [no longer supported by .NET](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md) and therefore also dropped by the Core (unless stated otherwise).
 
 PLACEHOLDER-UNSUPPORTED

@@ -5,7 +5,7 @@ using EndOfLifeDate;
 using MarkdownHelpers;
 
 int[] formerVersions = [6, 7, 8];
-int[] currentVersions = [6, 7, 8];
+int[] currentVersions = [6, 8];
 
 var template = "core-support-template.md";
 var file = "core-support.md";
@@ -212,18 +212,9 @@ static async Task WriteUnSupportedSectionAsync(StreamWriter writer, IEnumerable<
 
 static IEnumerable<(string DistributionId, string DistributionName, string Version)> GetUnsupportedVersions(List<TargetOsDistribution> targetDistros)
 {
-    var supportedBySome = targetDistros
-        .SelectMany(d => d.Distribution.SupportedVersions.Select(v => (d.Distribution.Id, Version: v)))
-        .Distinct()
-        .GroupBy(v => v.Id, v => v.Version)
-        .ToDictionary(v => v.Key, v => (IEnumerable<string>)v);
-    var unsupportedBySome =  targetDistros
+    return targetDistros
         .SelectMany(d => d.Distribution.UnsupportedVersions?.Select(v => (d.Distribution.Id, d.Distribution.Name, Version: v)) ?? [])
         .Distinct();
-
-    return unsupportedBySome.Where(v =>
-        !supportedBySome.TryGetValue(v.Id, out var val)
-        || !val.Contains(v.Version));
 }
 
 static string GetLifecycleAndNextEolVersion(SupportDistribution? distro, IEnumerable<VersionWithEol> versionEols)
