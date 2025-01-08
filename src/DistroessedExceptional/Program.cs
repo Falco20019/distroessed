@@ -1,56 +1,10 @@
 ﻿using DotnetRelease;
-using ExceptionalVersions = System.Collections.Generic.List<string>;
-using ExceptionsPerVersion = System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>>;
-using ExceptionsPerFamily = System.Collections.Generic.Dictionary<string, System.Collections.Generic.Dictionary<string, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>>>>;
 
 if (args.Length is 0 || !int.TryParse(args[0], out int majorVersion))
 {
     ReportInvalidArgs();
     return;
 }
-
-ExceptionsPerFamily exceptions = new()
-{
-    ["Windows"] = new()
-    {
-        ["Windows"] = new()
-        {
-            ["6.0"] = [ "10-1507-e-lts" ],
-            ["7.0"] = [ "10-1507-e-lts" ],
-            ["8.0"] = [ "10-1507-e-lts" ]
-        },
-        ["Windows Server"] = new()
-        {
-            ["6.0"] = [ "2012", "2012-R2" ],
-            ["7.0"] = [ "2012", "2012-R2" ],
-            ["8.0"] = [ "2012", "2012-R2" ],
-            ["9.0"] = [ "2012", "2012-R2" ]
-        },
-        ["Windows Server Core"] = new()
-        {
-            ["6.0"] = [ "2012", "2012-R2" ],
-            ["7.0"] = [ "2012", "2012-R2" ],
-            ["8.0"] = [ "2012", "2012-R2" ],
-            ["9.0"] = [ "2012", "2012-R2" ]
-        }
-    },
-    ["Linux"] = new()
-    {
-        ["CentOS Stream"] = new()
-        {
-            ["8.0"] = [ "8" ]
-        },
-        ["Debian"] = new()
-        {
-            ["6.0"] = [ "11" ],
-            ["8.0"] = [ "12" ]
-        },
-        ["Red Hat Enterprise Linux"] = new()
-        {
-            ["8.0"] = [ "7" ]
-        }
-    }
-};
 
 string? baseUrl = args.Length > 1 ? args[1] : null;
 
@@ -84,15 +38,10 @@ if (majorRelease?.SupportPhase == SupportPhase.Eol)
 }
 foreach (var family in report.Families)
 {
-    exceptions.TryGetValue(family.Name, out var familyExceptions);
-
     foreach (var distribution in family.Distributions)
     {
-        ExceptionsPerVersion? versionExceptions = null;
-        ExceptionalVersions? distroExceptions = null;
         var distroName = distribution.Name;
-        familyExceptions?.TryGetValue(distroName, out versionExceptions);
-        versionExceptions?.TryGetValue(reportVersion, out distroExceptions);
+        var distroExceptions = distribution.Exceptions.ToDictionary(e => e.Version, e => e.Note);
 
         foreach (var dVersion in distribution.ActiveReleasesEOLSoon)
         {
@@ -116,9 +65,9 @@ static void ReportInvalidArgs()
     Console.WriteLine("Expected: version [URL or Path, absolute or root location]");
 }
 
-void PrintIfNotExpected(string distroName, string distroVersion, ExceptionalVersions? distroExceptions, string text)
+void PrintIfNotExpected(string distroName, string distroVersion, IReadOnlyDictionary<string, string> distroExceptions, string text)
 {
-    if (distroExceptions?.Contains(distroVersion) == true) return;
+    if (distroExceptions?.ContainsKey(distroVersion) == true) return;
 
     Console.WriteLine($"** {distroName} {distroVersion}: {text}");
 }

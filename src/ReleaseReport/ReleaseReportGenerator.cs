@@ -106,7 +106,7 @@ public class ReleaseReportGenerator
                     }
                 }
 
-                ReportDistribution reportDistribution = new(distro.Name, activeReleases, unsupportedActiveRelease, soonEolReleases, supportedUnActiveReleases, unsupportedUnActiveReleases, missingReleases);
+                ReportDistribution reportDistribution = new(distro.Name, activeReleases, unsupportedActiveRelease, soonEolReleases, supportedUnActiveReleases, unsupportedUnActiveReleases, missingReleases, distro.ExceptionalVersions ?? []);
                 reportFamily.Distributions.Add(reportDistribution);
             }
         }
